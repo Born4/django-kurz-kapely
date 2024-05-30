@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Informace o kapele{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-2">
+            Název:
+        </div>
+        <div class="col">
+            {{ kapela.name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Rok:
+        </div>
+        <div class="col">
+            {{ kapela.year_string }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Žánr:
+        </div>
+        <div class="col">
+            {{ kapela.get_genre_display }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Aktivni:
+        </div>
+        <div class="col">
+            {{ kapela.zobraz_aktivitu }}
+        </div>
+    </div>
+{% endblock %}

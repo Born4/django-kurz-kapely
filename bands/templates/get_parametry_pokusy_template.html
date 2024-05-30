@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}GET parametry{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-2">
+            Kapela:
+        </div>
+        <div class="col-3">
+            {{ kapela }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Seradit:
+        </div>
+        <div class="col-3">
+            {{ seradit }}
+        </div>
+    </div>
+{% endblock %}

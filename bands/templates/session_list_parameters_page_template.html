@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Session parametry{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3">
+            <b>Parametr</b>
+        </div>
+        <div class="col-3">
+            <b>Hodnota</b>
+        </div>
+    </div>
+    {% for param_name, param_data in request.session.items %}
+    <div class="row">
+        <div class="col-3">
+            {{ param_name }}
+        </div>
+        <div class="col-3">
+            {{ param_data }}
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

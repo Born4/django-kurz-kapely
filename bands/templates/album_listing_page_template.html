@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Seznam alb{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3">
+            {% if seradit == "up" %}
+                <a href='{% url "bands:album-listing" %}?seradit=down&kapela={{ kapela.pk }}'><b>Název</b></a>
+            {% else %}
+                <a href="{% url 'bands:album-listing' %}?seradit=up&kapela={{ kapela.pk }}"><b>Název</b></a>
+            {% endif %}
+        </div>
+        <div class="col-1">
+            <b>Rok</b>
+        </div>
+        <div class="col-3">
+            <b>Kapela</b>
+        </div>
+    </div>
+    {% for album in object_list %}
+        <div class="row">
+            <div class="col-3">
+                <a href="">{{ album.name }}</a>
+            </div>
+            <div class="col-1">
+                <a href="">{{ album.year }}</a>
+            </div>
+            <div class="col-3">
+                <a href="">{{ album.band }}</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

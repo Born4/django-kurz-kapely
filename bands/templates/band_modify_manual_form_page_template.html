@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Kapela - modify{% endblock %}
+
+{% block content %}
+    <h3>Rucne vytvoreny formular</h3>
+    <form action="." method="post">
+        {% csrf_token %}
+        <label for="bname">Nazev</label><br>
+        <input type="text" id="bname" name="band_name"><br>
+        <label for="byear">Rok</label><br>
+        <input type="number" id="byear" name="band_year"><br><br>
+        <input type="submit" value="Odelsat formular">
+    </form>
+{% endblock %}

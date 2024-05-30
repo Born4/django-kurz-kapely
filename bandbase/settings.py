@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party
+    'django_extensions',
+    'bootstrap5',
+
+    # my apps
+    'bands',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +105,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+if os.environ.get('TEST_DB'):
+    print("Using test database")
+    DATABASES['default']['NAME'] = BASE_DIR / 'test_db.sqlite3'
+else:
+    print("Using default database")
 
 
 # Internationalization

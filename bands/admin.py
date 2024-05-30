@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from bands import models
+
+
+@admin.register(models.Band)
+class BandAdmin(admin.ModelAdmin):
+    list_display = ('name', 'year')

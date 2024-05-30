@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Seznam kapel{% endblock %}
+
+{% block content %}
+    {% for band in object_list %}
+        <div class="row">
+            <div class="col-3 text-danger">
+                <a href="{% url 'bands:band-detail' band.pk %}">{{ band.name }}</a>
+            </div>
+            <div class="col-1 text-center">
+                {{ band.year_string }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

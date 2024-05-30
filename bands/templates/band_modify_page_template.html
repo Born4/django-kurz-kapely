@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Kapela - modify{% endblock %}
+
+{% block content %}
+    Pristupova prava: {{ user_has_rights }}
+    {% if user_has_rights %}
+        <form action="." method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Odelsat">
+        </form>
+    {% else %}
+        {% include "access_rights_error.html" %}
+    {% endif %}
+{% endblock %}

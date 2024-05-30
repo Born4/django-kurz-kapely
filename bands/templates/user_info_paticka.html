@@ -1,0 +1,17 @@
+<hr>
+<div class="row">
+    <div class="col-3">
+        Uzivatel:&nbsp;&nbsp;
+        {% if user.is_authenticated %}
+            {{ user }}
+        {% else %}
+            (neprihlaseny)
+        {% endif %}
+    </div>
+    <div class="col-2">
+       <a href='{% url "account-login" %}'>Login</a> 
+    </div>
+    <div class="col-2">
+        <a href='{% url "logout-yes-no" %}?userid={{ user.pk }}'>Logout</a>
+    </div>
+</div>

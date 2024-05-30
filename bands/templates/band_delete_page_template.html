@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Kapela - modify{% endblock %}
+
+{% block content %}
+    <h3 class="text-danger">Opravdu chces tuto kapelu smazat?</h3>
+    <hr>
+    <div class="row">
+        <div class="col-2">
+            Název:
+        </div>
+        <div class="col">
+            {{ kapela.name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Rok:
+        </div>
+        <div class="col">
+            {{ kapela.year_string }}
+        </div>
+    </div>
+    <hr>
+    <br><br>
+
+    <form action="." method="post">{% csrf_token %}
+        <input type="submit" value="Smazat">
+    </form>
+{% endblock %}

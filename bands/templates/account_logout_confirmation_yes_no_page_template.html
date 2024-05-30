@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Logout OK{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col text-danger">
+            Opravdu se chcete odhlasit z aplikace? 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-danger">
+            Kliknutim na <a href='{% url "account-logout" %}?userid={{ userid }}'>odkaz</a> se odhlasite... 
+        </div>
+    </div>
+{% endblock %}

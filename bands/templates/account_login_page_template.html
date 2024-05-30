@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Login details{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <form action="." method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <input type="submit" name="button_login" value="Prihlasit"/> 
+            </form>
+        </div>
+    </div>
+{% endblock %}

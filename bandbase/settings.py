@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '185.50.231.20',
+    '185.50.231.21',
     'django-vps.born4web.cz',
 ]
 

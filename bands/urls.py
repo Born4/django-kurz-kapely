@@ -4,7 +4,7 @@ from bands.views import (band_list_view, band_detail_view,
                          band_manual_form_create_view, band_create_view,
                          band_update_view, band_delete_view, BandListViewGeneric, BandDetailViewGeneric,
                          BandCreateViewGeneric, BandUpdateViewGeneric, BandDeleteViewGeneric,
-                         TestGetParametru, AlbumListView, BandUpdateView)
+                         TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView)
 
 app_name = 'bands'
 urlpatterns = [
@@ -18,8 +18,8 @@ urlpatterns = [
 
     path('manual-form/', band_manual_form_create_view, name='manual-form'),
     # path('band-create/', band_create_view, name='band-create'),
-    path('band-create/', BandCreateViewGeneric.as_view(), name='band-create'),
-    # path('band-create/', BandCreateView.as_view(), name='band-create'),
+    # path('band-create/', BandCreateViewGeneric.as_view(), name='band-create'),
+    path('band-create/', BandCreateView.as_view(), name='band-create'),
 
     # path('band-update/<int:pk>/', band_update_view, name='band-update'),
     # path('band-update/<int:pk>/', BandUpdateViewGeneric.as_view(), name='band-update'),

@@ -91,6 +91,11 @@ class Band(models.Model, GetDataEngine):
         return f"{self.name} ({self.year})"
 
     @property
+    def full_name(self):
+        """Nazev kapely (rok)"""
+        return f"{self.name} * {self.year_string} * {self.get_genre_display()}"
+
+    @property
     def year_string(self):
         """Vrati rok nebo pomlcku"""
         if self.year:
@@ -141,3 +146,7 @@ class Song(models.Model):
 class Artist(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        """"""
+        return f"{self.last_name} {self.first_name}"

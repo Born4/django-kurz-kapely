@@ -236,12 +236,24 @@ class BandCreateViewGeneric(View):
             return HttpResponseRedirect(reverse_lazy("bad-data"))
 
 
-class BandCreateView(CreateView):
+class BandCreateView(LoginRequiredMixin,
+                     UserRightsMixin,
+                     CreateView):
     """"""
     model = Band
     template_name = 'band_modify_page_template.html'
     form_class = BandModelForm
     success_url = reverse_lazy('bands:band-listing')
+
+    pristupova_prava = ["editor", "administrator"]
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_context_rights())
+        print(context)
+        print(self.request.session.values)
+        return context
 
 
 # **********************************

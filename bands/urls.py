@@ -4,7 +4,7 @@ from bands.views import (band_list_view, band_detail_view,
                          band_manual_form_create_view, band_create_view,
                          band_update_view, band_delete_view, BandListViewGeneric, BandDetailViewGeneric,
                          BandCreateViewGeneric, BandUpdateViewGeneric, BandDeleteViewGeneric,
-                         TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView)
+                         TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView, BandAboutView)
 
 app_name = 'bands'
 urlpatterns = [
@@ -33,4 +33,5 @@ urlpatterns = [
 
     path('album-listing/', AlbumListView.as_view(), name='album-listing'),
 
+    path('about/', BandAboutView.as_view(), name='band-about')
 ]

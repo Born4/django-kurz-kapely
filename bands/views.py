@@ -552,3 +552,8 @@ class SessionListParametersView(LoginRequiredMixin,
                                 TemplateView):
     """"""
     template_name = "session_list_parameters_page_template.html"
+
+
+class BandAboutView(TemplateView):
+    """"""
+    template_name = "bands_about_page.html"

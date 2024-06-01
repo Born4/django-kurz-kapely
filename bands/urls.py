@@ -33,5 +33,5 @@ urlpatterns = [
 
     path('album-listing/', AlbumListView.as_view(), name='album-listing'),
 
-    path('about/', BandAboutView.as_view(), name='band-about')
+    path('about/', BandAboutView.as_view(), name='band-about'),
 ]

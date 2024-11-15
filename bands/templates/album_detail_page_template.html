@@ -3,6 +3,11 @@
 
 {% block title %}Informace o albu{% endblock %}
 
+{% block context_menu %}
+    <a href="{% url 'bands:album-update' object.pk %}" class="text-danger">Upravit</a>&nbsp;&nbsp;
+    <a href="{% url 'bands:album-delete' object.pk %}" class="text-danger">Smazat</a>&nbsp;&nbsp;
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-2">

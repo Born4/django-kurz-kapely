@@ -98,8 +98,8 @@ class BandListView(ListView):
     model = Band
     template_name = 'band_listing_page_template.html'
     extra_context = {
-        'show_screen_icon': True,
-        'show_screen_size': True,
+        # 'show_screen_icon': True,
+        # 'show_screen_size': True,
     }
 
 # **********************************
@@ -423,7 +423,7 @@ class BandDeleteViewGeneric(View):
 class BandDeleteView(DeleteView):
     """"""
     model = Band
-    template_name = 'band_modify_page_template.html'
+    template_name = 'band_delete_page_template.html'
     success_url = reverse_lazy('bands:band-listing')
 
 
@@ -468,8 +468,8 @@ class AlbumListView(ListView):
     model = Album
     template_name = 'album_listing_page_template.html'
     extra_context = {
-        'show_screen_icon': True,
-        'show_screen_size': True,
+        # 'show_screen_icon': True,
+        # 'show_screen_size': True,
     }
 
     # Interni parametry
@@ -592,11 +592,41 @@ class AlbumCreateView(CreateView):
     extra_context = {'user_has_rights': True}
 
 
+class AlbumDeleteView(DeleteView):
+    """"""
+    model = Album
+    template_name = 'album_delete_page_template.html'
+    success_url = reverse_lazy('bands:album-listing')
+
+
+class AlbumUpdateView(LoginRequiredMixin,
+                      UserRightsMixin,
+                      UpdateView):
+    """"""
+    model = Album
+    template_name = 'album_modify_page_template.html'
+    form_class = BandModelForm
+    success_url = reverse_lazy('bands:band-listing')
+
+    extra_context = {
+        # 'show_screen_icon': True,
+        # 'show_screen_size': True,
+    }
+
+    pristupova_prava = ["editor", "administrator"]
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_context_rights())
+        return context
+
+
 class SongListView(ListView):
     """"""
     model = Song
     template_name = 'song_listing_page_template.html'
     extra_context = {
-        'show_screen_icon': True,
-        'show_screen_size': True,
+        # 'show_screen_icon': True,
+        # 'show_screen_size': True,
     }

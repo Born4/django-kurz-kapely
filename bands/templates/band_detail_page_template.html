@@ -3,6 +3,11 @@
 
 {% block title %}Informace o kapele{% endblock %}
 
+{% block context_menu %}
+    <a href="{% url 'bands:band-update' object.pk %}" class="text-danger">Upravit</a>&nbsp;&nbsp;
+    <a href="{% url 'bands:band-delete' object.pk %}" class="text-danger">Smazat</a>&nbsp;&nbsp;
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-2">

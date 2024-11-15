@@ -103,7 +103,7 @@ class Band(models.Model, GetDataEngine):
     @property
     def full_name(self):
         """Nazev kapely (rok)"""
-        return f"{self.name} * {self.year_string} * {self.get_genre_display()}"
+        return f"{self.name} * {self.year_string} * {self.genre}"
 
     @property
     def year_string(self):
@@ -119,7 +119,7 @@ class Band(models.Model, GetDataEngine):
     @property
     def roletove_menu_pojmenovani(self):
         """"""
-        return f"{self.name} - ({self.get_genre_display()}) - ({self.year_string})"
+        return f"{self.name} - ({self.genre}) - ({self.year_string})"
 
 
 class Album(models.Model):

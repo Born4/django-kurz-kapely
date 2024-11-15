@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ObjectDoesNotExist
+
 from bands.models import Band, Album
 from bands.utils.data_access import check_object_duplicity
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -36,16 +38,27 @@ class BandModelForm(forms.ModelForm):
             'year': forms.NumberInput(attrs={'class': 'form-control'})
         }
 
-    def clean_name(self):
+    def clean_name_old(self):
         """"""
-        print("-------------------")
-        print("clean->name")
-        print(self.cleaned_data)
-        print("-------------------")
+        # print("-------------------")
+        # print("clean->name")
+        # print(self.cleaned_data)
+        # print("-------------------")
         new_name = self.cleaned_data.get('name')
-        is_duplicity = check_object_duplicity(Band, name=new_name)
+
+        is_duplicity = False
+
+        try:
+            # print("TESTUJI ADRESU v DB")
+            sb_band = Band.objects.get(name=new_name)
+            if self.instance:
+                if sb_band.pk != self.instance.pk:
+                    is_duplicity = True
+        except ObjectDoesNotExist:
+            # print("Duplicita zda se neexistuje...")
+            pass
         if is_duplicity:
-            print("Duplicita je na urovni clean_name")
+            # print("Duplicita je na urovni clean_name")
             if isinstance(is_duplicity, Band):
                 kapela_existuje = is_duplicity.full_name
             else:
@@ -56,22 +69,27 @@ class BandModelForm(forms.ModelForm):
 
     def clean(self):
         """"""
-        print("-------------------")
-        print("clean->ALL")
-        print(self.cleaned_data)
-        print("-------------------")
+        # print("-------------------")
+        # print("clean->ALL")
+        # print(self.cleaned_data)
+        # print("-------------------")
         new_name = self.cleaned_data.get('name')
-        new_year = self.cleaned_data.get('year')
 
-        is_duplicity = check_object_duplicity(Band, name=new_name)
+        is_duplicity = False
+
+        try:
+            # print("TESTUJI ADRESU v DB")
+            db_band = Band.objects.get(name=new_name)
+            if self.instance:
+                if db_band.pk != self.instance.pk:
+                    is_duplicity = True
+        except ObjectDoesNotExist:
+            # print("Duplicita zda se neexistuje...")
+            pass
         if is_duplicity:
-            print("Duplicita je na urovni clean")
-            if isinstance(is_duplicity, Band):
-                kapela_existuje = is_duplicity.full_name
-            else:
-                kapela_existuje = "EXISTUJE JICH VICE !!!"
-            raise forms.ValidationError(f"Kapela zadaneho jmena: {new_name} uz existuje: "
-                                        f"({kapela_existuje}), zadejte jine dekuji...")
+            # print("Duplicita je na urovni clean_name")
+            raise forms.ValidationError(f"Kapela zadaneho jmena: {new_name} uz existuje, "
+                                        f"zadejte jine dekuji...")
 
 
 class BandInAlbumChoiceFiled(forms.ModelChoiceField):
@@ -88,4 +106,27 @@ class AlbumModelForm(forms.ModelForm):
         model = Album
         fields = '__all__'
 
+    def clean(self):
+        """"""
+        # print("-------------------")
+        # print("clean->ALL")
+        # print(self.cleaned_data)
+        # print("-------------------")
+        new_name = self.cleaned_data.get('name')
+
+        is_duplicity = False
+
+        try:
+            # print("TESTUJI ADRESU v DB")
+            db_album = Album.objects.get(name=new_name)
+            if self.instance:
+                if db_album.pk != self.instance.pk:
+                    is_duplicity = True
+        except ObjectDoesNotExist:
+            # print("Duplicita zda se neexistuje...")
+            pass
+        if is_duplicity:
+            # print("Duplicita je na urovni clean_name")
+            raise forms.ValidationError(f"Album zadaneho jmena: {new_name} uz existuje, "
+                                        f"zadejte jine dekuji...")
 

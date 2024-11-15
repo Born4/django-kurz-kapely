@@ -5,7 +5,8 @@ from bands.views import (band_list_view, band_detail_view,
                          band_update_view, band_delete_view, BandListViewGeneric, BandDetailViewGeneric,
                          BandCreateViewGeneric, BandUpdateViewGeneric, BandDeleteViewGeneric,
                          TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView, BandAboutView,
-                         BandListView, AlbumCreateView, SongListView, AlbumDetailView, SongDetailView)
+                         BandListView, AlbumCreateView, SongListView, AlbumDetailView, SongDetailView, AlbumUpdateView,
+                         AlbumDeleteView)
 
 app_name = 'bands'
 urlpatterns = [
@@ -35,6 +36,8 @@ urlpatterns = [
     path('album-listing/', AlbumListView.as_view(), name='album-listing'),
     path('album-create/', AlbumCreateView.as_view(), name='album-create'),
     path('album-detail/<int:pk>/', AlbumDetailView.as_view(), name='album-detail'),
+    path('album-update/<int:pk>/', AlbumUpdateView.as_view(), name='album-update'),
+    path('album-delete/<int:pk>/', AlbumDeleteView.as_view(), name='album-delete'),
 
     path('song-listing/', SongListView.as_view(), name='song-listing'),
     path('song-detail/<int:pk>/', SongDetailView.as_view(), name='song-detail'),

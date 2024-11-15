@@ -1,0 +1,13 @@
+{% if show_screen_size %}
+<button onclick="browserWindowSize()">wsize</button>
+
+<p id="demo"></p>
+
+<script>
+function browserWindowSize() {
+  var w = window.innerWidth;
+  var h = window.innerHeight;
+  document.getElementById("demo").innerHTML = "X: " + w + "<br>Y: " + h;
+}
+</script>
+{% endif %}

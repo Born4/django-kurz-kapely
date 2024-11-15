@@ -4,17 +4,18 @@ from bands.views import (band_list_view, band_detail_view,
                          band_manual_form_create_view, band_create_view,
                          band_update_view, band_delete_view, BandListViewGeneric, BandDetailViewGeneric,
                          BandCreateViewGeneric, BandUpdateViewGeneric, BandDeleteViewGeneric,
-                         TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView, BandAboutView)
+                         TestGetParametru, AlbumListView, BandUpdateView, BandCreateView, BandDetailView, BandAboutView,
+                         BandListView, AlbumCreateView, SongListView, AlbumDetailView, SongDetailView)
 
 app_name = 'bands'
 urlpatterns = [
     # path('band-listing/', band_list_view, name='band-listing'),
-    path('band-listing/', BandListViewGeneric.as_view(), name='band-listing'),
-    # path('band-listing/', BandListView.as_view(), name='band-lising'),
+    # path('band-listing/', BandListViewGeneric.as_view(), name='band-listing'),
+    path('band-listing/', BandListView.as_view(), name='band-listing'),
 
     # path('band-detail/<int:pk>/', band_detail_view, name='band-detail'),
-    path('band-detail/<int:pk>/', BandDetailViewGeneric.as_view(), name='band-detail'),
-    # path('band-detail/<int:pk>/', BandDetailView.as_view(), name='band-detail'),
+    # path('band-detail/<int:pk>/', BandDetailViewGeneric.as_view(), name='band-detail'),
+    path('band-detail/<int:pk>/', BandDetailView.as_view(), name='band-detail'),
 
     path('manual-form/', band_manual_form_create_view, name='manual-form'),
     # path('band-create/', band_create_view, name='band-create'),
@@ -32,6 +33,11 @@ urlpatterns = [
     path('get-parametry/', TestGetParametru.as_view(), name='tes-get-params'),
 
     path('album-listing/', AlbumListView.as_view(), name='album-listing'),
+    path('album-create/', AlbumCreateView.as_view(), name='album-create'),
+    path('album-detail/<int:pk>/', AlbumDetailView.as_view(), name='album-detail'),
+
+    path('song-listing/', SongListView.as_view(), name='song-listing'),
+    path('song-detail/<int:pk>/', SongDetailView.as_view(), name='song-detail'),
 
     path('about/', BandAboutView.as_view(), name='band-about'),
 ]

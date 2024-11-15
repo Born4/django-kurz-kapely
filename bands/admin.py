@@ -7,9 +7,15 @@ from bands import models
 #admin.site.register(models.Artist)
 
 
+@admin.register(models.Genre)
+class GenreAdmin(admin.ModelAdmin):
+    # list_display = ('name')
+    pass
+
+
 @admin.register(models.Band)
 class BandAdmin(admin.ModelAdmin):
-    list_display = ['name', 'year', 'still_active', 'genre', 'get_full_name']
+    list_display = ('name', 'year', 'still_active', 'genre', 'get_full_name')
 
     @admin.display(description='Full name')
     def get_full_name(self, obj):

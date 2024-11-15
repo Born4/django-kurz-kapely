@@ -9,7 +9,7 @@
             Název:
         </div>
         <div class="col">
-            <b>{{ object.name }}</b>
+            <b>{{ kapela.name }}</b>
         </div>
     </div>
     <div class="row">
@@ -17,7 +17,7 @@
             Rok:
         </div>
         <div class="col">
-            {{ object.year_string }}
+            {{ kapela.year_string }}
         </div>
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
             Žánr:
         </div>
         <div class="col">
-            {{ object.genre }}
+            {{ kapela.genre }}
         </div>
     </div>
     <div class="row">
@@ -33,7 +33,7 @@
             Aktivni:
         </div>
         <div class="col">
-            {{ object.zobraz_aktivitu }}
+            {{ kapela.zobraz_aktivitu }}
         </div>
     </div>
     <hr>
@@ -42,7 +42,7 @@
             <i>Seznam alb</i>
         </div>
     </div>
-    {% for album in object.album_set.all %}
+    {% for album in kapela.album_set.all %}
         <div class="row">
             <div class="col">
                 <a href="{% url 'bands:album-detail' album.pk %}">{{ album.nice_name }}</a>

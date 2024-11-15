@@ -3,14 +3,38 @@
 
 {% block title %}Seznam kapel{% endblock %}
 
+{% block context_menu %}
+    <a href="{% url 'bands:band-create' %}" class="text-danger">Přidat novou</a>
+{% endblock %}
+
 {% block content %}
+        <div class="row">
+            <div class="col-8 col-sm-6 col-md-5 col-lg-4">
+                <b>Název</b>
+            </div>
+            <div class="col-2 text-center">
+                <b>Rok</b>
+            </div>
+            <div class="col-2 d-none d-md-block text-center">
+                <b>Existuje</b>
+            </div>
+            <div class="col col-md-3 d-none d-sm-block text-center">
+                <b>Žánr</b>
+            </div>
+        </div>
     {% for band in object_list %}
         <div class="row">
-            <div class="col-3 text-danger">
+            <div class="col-8 col-sm-6 col-md-5 col-lg-4">
                 <a href="{% url 'bands:band-detail' band.pk %}">{{ band.name }}</a>
             </div>
-            <div class="col-1 text-center">
+            <div class="col-2 text-center">
                 {{ band.year_string }}
+            </div>
+            <div class="col-2 d-none d-md-block text-center">
+                {{ band.zobraz_aktivitu }}
+            </div>
+            <div class="col col-md-3 d-none d-sm-block text-center">
+                {{ band.genre }}
             </div>
         </div>
     {% endfor %}

@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from bands.models import Band, Album
+from bands.models import Band, Album, Song
 from django.urls import reverse, reverse_lazy
-from bands.forms import BandGenericForm, BandModelForm
+from bands.forms import BandGenericForm, BandModelForm, AlbumModelForm
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView, \
     RedirectView
 
@@ -97,7 +97,10 @@ class BandListView(ListView):
     """"""
     model = Band
     template_name = 'band_listing_page_template.html'
-
+    extra_context = {
+        'show_screen_icon': True,
+        'show_screen_size': True,
+    }
 
 # **********************************
 # DETAIL VIEWS
@@ -118,13 +121,13 @@ class BandDetailViewGeneric(View):
     """Band List View generic way"""
     def get(self, *args, **kwargs):
         """"""
-        print("BandDetailViewGeneric->get")
-        print_view_inputs(self.request, *args, **kwargs)
+        # print("BandDetailViewGeneric->get")
+        # print_view_inputs(self.request, *args, **kwargs)
         band = Band.objects.filter(pk=kwargs.get('pk')).first()
         if not band:
             return HttpResponseRedirect(reverse_lazy("bad-data"))
         return render(self.request,
-                      template_name='band_detail_page_template.html',
+                      template_name='band_detail_page_kapela_object_template.html',
                       context={'kapela': band})
 
 
@@ -132,6 +135,19 @@ class BandDetailView(DetailView):
     """"""
     model = Band
     template_name = 'band_detail_page_template.html'
+
+
+class AlbumDetailView(DetailView):
+    """"""
+    model = Album
+    template_name = 'album_detail_page_template.html'
+
+
+class SongDetailView(DetailView):
+    """"""
+    model = Song
+    template_name = 'song_detail_page_template.html'
+
 
 
 # **********************************
@@ -331,6 +347,11 @@ class BandUpdateView(LoginRequiredMixin,
     form_class = BandModelForm
     success_url = reverse_lazy('bands:band-listing')
 
+    extra_context = {
+        'show_screen_icon': True,
+        'show_screen_size': True,
+    }
+
     pristupova_prava = ["editor", "administrator"]
 
     def get_context_data(self, **kwargs):
@@ -446,6 +467,10 @@ class AlbumListView(ListView):
     """"""
     model = Album
     template_name = 'album_listing_page_template.html'
+    extra_context = {
+        'show_screen_icon': True,
+        'show_screen_size': True,
+    }
 
     # Interni parametry
     seradit = None
@@ -556,4 +581,22 @@ class SessionListParametersView(LoginRequiredMixin,
 
 class BandAboutView(TemplateView):
     """"""
-    template_name = "bands_about_page.html"
+    template_name = "bands_about_page_template.html"
+
+
+class AlbumCreateView(CreateView):
+    template_name = "album_modify_page_template.html"
+    form_class = AlbumModelForm
+    model = Album
+    success_url = reverse_lazy('bands:album-list')
+    extra_context = {'user_has_rights': True}
+
+
+class SongListView(ListView):
+    """"""
+    model = Song
+    template_name = 'song_listing_page_template.html'
+    extra_context = {
+        'show_screen_icon': True,
+        'show_screen_size': True,
+    }

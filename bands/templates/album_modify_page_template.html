@@ -9,23 +9,9 @@
         <form action="." method="post">{% csrf_token %}
             <div class="row">
                 <div class="col col-sm-8  col-md-6 col-xl-4">
-                    <label for="id_band_name">{{ form.name.label }}</label>
-                    {{ form.name }}
-                    <small id="nameHelptext" class="form-text text-muted">
-                        {{ form.name.help_text }}
-                    </small>
+                    {{ form.as_p }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col col-sm-8 col-md-6 col-xl-4">
-                    <label for="id_band_name">{{ form.year.label }}</label>
-                    {{ form.year }}
-                    <small id="nameHelptext" class="form-text text-muted">
-                        {{ form.year.help_text }}
-                    </small>
-                </div>
-            </div>
-            <br>
             <div class="row">
                 <div class="col">
                     <input class="btn btn-primary mb-2 btn-block" type="submit" value="Odeslat">

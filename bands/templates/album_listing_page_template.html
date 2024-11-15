@@ -3,32 +3,36 @@
 
 {% block title %}Seznam alb{% endblock %}
 
+{% block context_menu %}
+    <a href="{% url 'bands:album-create' %}" class="text-danger">Přidat novou</a>
+{% endblock %}
+
 {% block content %}
     <div class="row">
-        <div class="col-3">
+        <div class="col-8 col-sm-6 col-md-5 col-lg-4">
             {% if seradit == "up" %}
                 <a href='{% url "bands:album-listing" %}?seradit=down&kapela={{ kapela.pk }}'><b>Název</b></a>
             {% else %}
                 <a href="{% url 'bands:album-listing' %}?seradit=up&kapela={{ kapela.pk }}"><b>Název</b></a>
             {% endif %}
         </div>
-        <div class="col-1">
+        <div class="col-2 text-center">
             <b>Rok</b>
         </div>
-        <div class="col-3">
+        <div class="col-4 d-none d-md-block">
             <b>Kapela</b>
         </div>
     </div>
     {% for album in object_list %}
         <div class="row">
-            <div class="col-3">
-                <a href="">{{ album.name }}</a>
+            <div class="col-8 col-sm-6 col-md-5 col-lg-4">
+                <a href="{% url 'bands:album-detail' album.pk %}">{{ album.name }}</a>
             </div>
-            <div class="col-1">
-                <a href="">{{ album.year }}</a>
+            <div class="col-2 text-center">
+                {{ album.year }}
             </div>
-            <div class="col-3">
-                <a href="">{{ album.band }}</a>
+            <div class="col-4 d-none d-md-block">
+                <a href="{% url 'bands:band-detail' album.band.pk %}">{{ album.band.name }}</a>
             </div>
         </div>
     {% endfor %}

@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Sum
+from bands.utils.data_conversion import get_duration_string
 
 SEZNAM_ZANRU = (
     (0, "Neznamy"),
@@ -32,6 +33,14 @@ class GetDataEngine:
         pass
 
 
+class Genre(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        """Developer print data"""
+        return self.name
+
+
 class BandQuerySet(models.QuerySet):
     """"""
     def search(self, query):
@@ -61,7 +70,8 @@ class Band(models.Model, GetDataEngine):
     name = models.CharField(max_length=64)
     year = models.IntegerField(null=True, blank=True)
     still_active = models.BooleanField(default=False, blank=True)
-    genre = models.IntegerField(choices=SEZNAM_ZANRU, default=0, blank=True)
+    # genre = models.IntegerField(choices=SEZNAM_ZANRU, default=0, blank=True)
+    genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Uprava Queryset
     objects = BandManager()
@@ -106,6 +116,11 @@ class Band(models.Model, GetDataEngine):
     def zobraz_aktivitu(self):
         return "ano" if self.still_active else "ne"
 
+    @property
+    def roletove_menu_pojmenovani(self):
+        """"""
+        return f"{self.name} - ({self.get_genre_display()}) - ({self.year_string})"
+
 
 class Album(models.Model):
     name = models.CharField(max_length=64)
@@ -124,11 +139,60 @@ class Album(models.Model):
         """Nazev kapely (rok)"""
         return f"{self.name} ({self.year})"
 
+    @property
+    def celkova_delka(self):
+        """Vrati celkovou delku pisni na albu"""
+        return self.song_set.secti_delky_seconds()
+
+    @property
+    def celkova_delka_string(self):
+        """Vrati celkovou delku pisni na albu"""
+        return self.song_set.all().secti_delky_string()
+
+
+class SongQuerySet(models.QuerySet):
+    """"""
+    def search(self, query):
+        """Vyhledava rezetec query v datech modelu"""
+        if query:
+            query = query.strip()
+            return self.filter(name__icontains=query)
+        return self
+
+    def secti_delky_seconds(self):
+        """"""
+        return self.aggregate(total_length=Sum('duration'))['total_length']
+
+    def secti_delky_string(self):
+        """"""
+        return get_duration_string(self.secti_delky_seconds())
+
+
+class SongManager(models.Manager):
+    """"""
+    def get_queryset(self):
+        """"""
+        return SongQuerySet(self.model, using=self._db)
+
+    def search(self, query):
+        """"""
+        return self.get_queryset().search(query)
+
+    def secti_delky_seconds(self):
+        """"""
+        return self.secti_delky_seconds()
+
+    def secti_delky_string(self):
+        """"""
+        return self.secti_delky_string()
+
 
 class Song(models.Model):
     name = models.CharField(max_length=64)
     duration = models.IntegerField()  # delka skladby v sekundach
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
+
+    objects = SongManager()
 
     def __str__(self):
         """"""
@@ -140,7 +204,7 @@ class Song(models.Model):
 
     def get_duration_str(self):
         """Vratit retezec duration ve tvaru mm:ss"""
-        return f"{self.duration // 60}:{self.duration % 60}"
+        return get_duration_string(self.duration)
 
 
 class Artist(models.Model):

@@ -1,5 +1,5 @@
 from django import forms
-from bands.models import Band
+from bands.models import Band, Album
 from bands.utils.data_access import check_object_duplicity
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -19,16 +19,6 @@ class BandGenericForm(forms.Form):
 
 class BandModelForm(forms.ModelForm):
     """"""
-    year = forms.IntegerField(label="Rok",
-                              help_text="Zadejte rok zalozeni kapely",
-                              widget=forms.NumberInput(),
-                              validators=[
-                                  MinValueValidator(1900,
-                                                    message="Zadejte rok vetsi nez 1900"),
-                                  MaxValueValidator(3000,
-                                                    message="Zadejte rok mensi nez 3000"),
-                              ],
-                              required=True)
 
     class Meta:
         model = Band
@@ -40,6 +30,10 @@ class BandModelForm(forms.ModelForm):
         help_texts = {
             'name': 'Zadejte nazev kapely - max 64 znaku',
             'year': 'Zadejte rok zalozeni kapely'
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'class': 'form-control'})
         }
 
     def clean_name(self):
@@ -78,3 +72,20 @@ class BandModelForm(forms.ModelForm):
                 kapela_existuje = "EXISTUJE JICH VICE !!!"
             raise forms.ValidationError(f"Kapela zadaneho jmena: {new_name} uz existuje: "
                                         f"({kapela_existuje}), zadejte jine dekuji...")
+
+
+class BandInAlbumChoiceFiled(forms.ModelChoiceField):
+    """Modifikace zobrazeni Band ...."""
+    def label_from_instance(self, obj):
+        return obj.roletove_menu_pojmenovani
+
+
+class AlbumModelForm(forms.ModelForm):
+    """"""
+    band = BandInAlbumChoiceFiled(queryset=Band.objects.all(), help_text="Vyber kapelu")
+
+    class Meta:
+        model = Album
+        fields = '__all__'
+
+

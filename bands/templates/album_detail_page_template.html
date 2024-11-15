@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
 
-{% block title %}Informace o kapele{% endblock %}
+{% block title %}Informace o albu{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -17,37 +17,39 @@
             Rok:
         </div>
         <div class="col">
-            {{ object.year_string }}
+            {{ object.year }}
         </div>
     </div>
     <div class="row">
         <div class="col-2">
-            Žánr:
+            Délka:
         </div>
         <div class="col">
-            {{ object.genre }}
+            {{ object.celkova_delka_string }}
         </div>
     </div>
     <div class="row">
         <div class="col-2">
-            Aktivni:
+            Kapela:
         </div>
         <div class="col">
-            {{ object.zobraz_aktivitu }}
+            <a href="{% url 'bands:band-detail' object.band.pk %}">{{ object.band.name }}</a>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-2">
-            <i>Seznam alb</i>
+            <i>Seznam písní</i>
         </div>
     </div>
-    {% for album in object.album_set.all %}
+    {% for pisen in object.song_set.all %}
         <div class="row">
-            <div class="col">
-                <a href="{% url 'bands:album-detail' album.pk %}">{{ album.nice_name }}</a>
+            <div class="col-5">
+                <a href="{% url 'bands:song-detail' pisen.pk %}">{{ pisen.name }}</a>
+            </div>
+            <div class="col-1">
+                {{ pisen.get_duration_str }}
             </div>
         </div>
     {% endfor %}
-    
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Informace o písni{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-2">
+            Název:
+        </div>
+        <div class="col">
+            <b>{{ object.name }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Délka:
+        </div>
+        <div class="col">
+            {{ object.get_duration_str }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Album:
+        </div>
+        <div class="col">
+            <a href="{% url 'bands:album-detail' object.album.pk %}">{{ object.album.nice_name }}</a>
+        </div>
+    </div>
+{% endblock %}

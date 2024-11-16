@@ -627,6 +627,6 @@ class SongListView(ListView):
     model = Song
     template_name = 'song_listing_page_template.html'
     extra_context = {
-        # 'show_screen_icon': True,
-        # 'show_screen_size': True,
+        'show_screen_icon': True,
+        'show_screen_size': True,
     }

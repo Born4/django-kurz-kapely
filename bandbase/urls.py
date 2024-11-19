@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from bandbase.views import data_odeslana_data_ok, data_odeslana_bad_data, home_page
-from bands.views import AccountLoginConfirmationView, AccountLogoutConfirmationView, AccountLoginView, AccountLogoutView, AccountLogoutYesNoView, SessionListParametersView
+from bands.views import AccountLoginConfirmationView, AccountLogoutConfirmationView, AccountLoginView, \
+    AccountLogoutView, AccountLogoutYesNoView, SessionListParametersView, BandAboutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,5 +36,6 @@ urlpatterns = [
     # Service views
     path('ok-data/', data_odeslana_data_ok, name="ok-data"),
     path('bad-data/', data_odeslana_bad_data, name="bad-data"),
-    path('', home_page, name='home'),
+    # path('', home_page, name='home'),
+    path('', BandAboutView.as_view(), name='home-page'),
 ]

@@ -10,6 +10,7 @@ from bands.views import (band_list_view, band_detail_view,
 
 app_name = 'bands'
 urlpatterns = [
+    path('', BandAboutView.as_view(), name='home-page'),
     # path('band-listing/', band_list_view, name='band-listing'),
     # path('band-listing/', BandListViewGeneric.as_view(), name='band-listing'),
     path('band-listing/', BandListView.as_view(), name='band-listing'),
